@@ -104,7 +104,7 @@ public class KeyguardStatusBarView extends RelativeLayout
     private int mCutoutSideNudge = 0;
 
     // Cutout
-    private boolean mHasBigCutout;
+    private boolean mHasCutout;
 
     public KeyguardStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -173,9 +173,9 @@ public class KeyguardStatusBarView extends RelativeLayout
                 R.dimen.system_icons_super_container_avatarless_margin_end);
         mCutoutSideNudge = getResources().getDimensionPixelSize(
                 R.dimen.display_cutout_margin_consumption);
-        mHasBigCutout = CutoutUtils.hasBigCutout(getContext());
         mShowPercentAvailable = getContext().getResources().getBoolean(
                 com.android.internal.R.bool.config_battery_percentage_setting_available);
+        mHasCutout = CutoutUtils.hasCutout(getContext());
     }
 
     private void updateVisibilities() {
@@ -191,7 +191,7 @@ public class KeyguardStatusBarView extends RelativeLayout
             // If we have no keyguard switcher, the screen width is under 600dp. In this case,
             // we only show the multi-user switch if it's enabled through UserManager as well as
             // by the user.
-            if (!mHasBigCutout && mMultiUserSwitch.isMultiUserEnabled()) {
+            if (!mHasCutout && mMultiUserSwitch.isMultiUserEnabled()) {
                 mMultiUserSwitch.setVisibility(View.VISIBLE);
             } else {
                 mMultiUserSwitch.setVisibility(View.GONE);
@@ -459,9 +459,9 @@ public class KeyguardStatusBarView extends RelativeLayout
 
     @Override
     public void onOverlayChanged() {
-        mHasBigCutout = CutoutUtils.hasBigCutout(getContext());
         mShowPercentAvailable = getContext().getResources().getBoolean(
                 com.android.internal.R.bool.config_battery_percentage_setting_available);
+        mHasCutout = CutoutUtils.hasCutout(getContext());
         mCarrierLabel.setTextAppearance(
                 Utils.getThemeAttr(mContext, com.android.internal.R.attr.textAppearanceSmall));
         onThemeChanged();
