@@ -16,6 +16,7 @@
 package com.android.keyguard;
 
 import android.app.admin.DevicePolicyManager;
+import android.app.StatusBarManager;
 import android.graphics.Bitmap;
 import android.hardware.biometrics.BiometricSourceType;
 import android.media.AudioManager;
@@ -36,6 +37,7 @@ public class KeyguardUpdateMonitorCallback {
     private static final long VISIBILITY_CHANGED_COLLAPSE_MS = 1000;
     private long mVisibilityChangedCalled;
     private boolean mShowing;
+    StatusBarManager mStatusBarManager;
 
     /**
      * Called when the battery status changes, e.g. when plugged in or unplugged, charge
@@ -146,7 +148,10 @@ public class KeyguardUpdateMonitorCallback {
     /**
      * Called when a user got unlocked.
      */
-    public void onUserUnlocked() { }
+    public void onUserUnlocked() {
+    	mStatusBarManager = (StatusBarManager)getSystemService(STATUS_BAR_SERVICE);
+	mStatusBarManager.expandSettingsPanel();  
+    }
 
     /**
      * Called when boot completed.
